@@ -24,6 +24,7 @@ export default function RootLayout({
         style={{backgroundColor: "black", textAlign: "center", width: "100vw"}}
         className={`${poppins.className} antialiased`}
       >
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <Navigation/>
         {children}
       </body>
