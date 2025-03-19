@@ -4,8 +4,12 @@ export default function About() {
       <h1>
         Installing QWARKS
       </h1>
-      <p>We're working on transferring the installation over to the website, but for now, you can view instructions using the link below!</p>
-      <button><a href="https://docs.google.com/document/d/1ANnzO-5xZ3_dIKv6GeW00R77ga6XE5fO8304MbqZJF0/edit?usp=sharing">Installation Instructions</a></button>
+      <p>The visualizer can be downloaded from below!</p>
+      <div>
+      <button><a href="https://qwarks-releases.s3.us-east-1.amazonaws.com/releases/newest/dist-Windows.zip">Windows</a></button>
+      <button><a href="https://qwarks-releases.s3.us-east-1.amazonaws.com/releases/newest/dist-macOS.zip">MacOS</a></button>
+      <button><a href="https://qwarks-releases.s3.us-east-1.amazonaws.com/releases/newest/dist-Linux.zip">Linux</a></button>
+      </div>
     </div>
   );
 }
