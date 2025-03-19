@@ -17,6 +17,7 @@ export default function VisualizerCanvas({ match, ...props }) {
     teams: [],
     matchLoaded: false,
     autorun: false,
+    mousePos: [0, 0],
   });
 
   // Initialize match data if available:
@@ -175,25 +176,36 @@ export default function VisualizerCanvas({ match, ...props }) {
           energyLevel: 0
         }
       }
-      var teamColor = (255, 255, 255);
+      var teamColor = [255, 255, 255];
       for (var team of canvasState.current.teams) {
         if (team[0] == qwark.teamid) {
           teamColor = team[1];
           break;
         }
       }
+
+      var baseX = qwark.x * DRAW_SIZE - canvasState.current.cameraOffset[0];
+      var baseY = qwark.y * DRAW_SIZE - canvasState.current.cameraOffset[1];
+
+      if (baseX - DRAW_SIZE / 2 < canvasState.current.mousePos[0] &&
+        baseX + DRAW_SIZE / 2 > canvasState.current.mousePos[0] &&
+        baseY - DRAW_SIZE / 2 < canvasState.current.mousePos[1] &&
+        baseY + DRAW_SIZE / 2 > canvasState.current.mousePos[1]) {
+        teamColor = [255, 255, 255];
+        hover = qwark;
+      }
       
       // units themseslves
-      ctx.fillStyle = `rgba(${team[1].join(",")}, 255)`;
+      ctx.fillStyle = `rgba(${teamColor.join(",")}, 255)`;
       ctx.beginPath();
-      ctx.arc(qwark.x * DRAW_SIZE - canvasState.current.cameraOffset[0], qwark.y * DRAW_SIZE - canvasState.current.cameraOffset[1], DRAW_SIZE / 2 - 2, 0, 2 * Math.PI);
+      ctx.arc(baseX, baseY, DRAW_SIZE / 2 - 2, 0, 2 * Math.PI);
       ctx.fill();
 
       // energy indicators
       ctx.globalAlpha = 1/4;
       var size = DRAW_SIZE + (Math.sqrt(qwark.energy) * 5 / ZOOM_DIVISOR)
       ctx.beginPath();
-      ctx.arc(qwark.x * DRAW_SIZE - canvasState.current.cameraOffset[0], qwark.y * DRAW_SIZE - canvasState.current.cameraOffset[1], size / 2 - 2, 0, 2 * Math.PI);
+      ctx.arc(baseX, baseY, size / 2 - 2, 0, 2 * Math.PI);
       ctx.fill();
       ctx.globalAlpha = 1;
 
@@ -203,8 +215,8 @@ export default function VisualizerCanvas({ match, ...props }) {
       ctx.font = getFontForText(text);
       var renderSize = ctx.measureText(text);
       ctx.fillText(text, 
-        qwark.x * DRAW_SIZE - renderSize.width / 2 - canvasState.current.cameraOffset[0],
-        qwark.y * DRAW_SIZE + (renderSize.actualBoundingBoxAscent+renderSize.actualBoundingBoxDescent)/2 - canvasState.current.cameraOffset[1]
+        baseX - renderSize.width / 2,
+        baseY + (renderSize.actualBoundingBoxAscent+renderSize.actualBoundingBoxDescent)/2
       );
       // TODO: check for hover
     });
@@ -274,11 +286,24 @@ export default function VisualizerCanvas({ match, ...props }) {
       }
     };
 
+    const handleMouseMove = (e) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const { devicePixelRatio: ratio = 1 } = window;
+      
+      canvasState.current.mousePos = [(e.clientX - rect.left) * scaleX / ratio, (e.clientY - rect.top) * scaleY / ratio];
+    }
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
