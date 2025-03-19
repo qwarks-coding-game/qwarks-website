@@ -38,8 +38,8 @@ export default function About() {
       <ol style={{display: "flex", alignItems: "center", flexDirection: "column", textAlign: "center"}}>
         <li>Open up a terminal in the same folder as the executable. Type <i>ls</i> and hit enter to make sure that you are in the right folder.</li>
         <li>Type in <i>chmod +x QWARKS</i> and hit enter. You may need to run <i>sudo chmod +x QWARKS</i>.</li>
-        <li>Go back to Finder and double click on the file again. If this doesn't work, try running <i>./QWARKSDarwin</i> or <i>sudo ./QWARKSDarwin</i> in the terminal.</li>
-        <li>If MacOS says that there are permission issues, go to Apple menu > System Settings, then click Privacy & Security in the sidebar. (You may need to scroll down.) </li>
+        <li>Go back to Finder and double click on the file again. If this doesn't work, try running <i>.{"/"}QWARKSDarwin</i> or <i>sudo .{"/"}QWARKSDarwin</i> in the terminal.</li>
+        <li>If MacOS says that there are permission issues, go to Apple menu {">"} System Settings, then click Privacy & Security in the sidebar. (You may need to scroll down.) </li>
         <li>Go to Security, locate the warning about QWARKSDarwin, then click Open. </li>
         <li>Click Open Anyway. (This button is available for about an hour after you try to open the app.)</li>
         <li>Enter your login password, then click OK.</li>

@@ -61,4 +61,5 @@ li {
   list-style-type: decimal;
   width: min-content;
   min-width: 50vw;
+  max-width: 100vw;
 }
