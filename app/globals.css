@@ -48,6 +48,10 @@ button {
   cursor: pointer
 }
 
+button:hover {
+  background-color: #ffffff;
+}
+
 .navbar:hover{
   box-shadow: 0px 0px 20px #4AD44B;
 }
