@@ -38,6 +38,10 @@ h3 {
   font-size: 24px;
 }
 
+h2, h3, p, li {
+  color: #ffffff;
+}
+
 button {
   font-size: 32pt;
   background-color: #4AD44B;
@@ -59,7 +63,6 @@ button:hover {
 .navbarElement:hover{
   color: #4AD44B;
 }
-
 
 li {
   list-style-type: decimal;
